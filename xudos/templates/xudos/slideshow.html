@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}Xudos{% endblock %}
+
+{% block body %}
+
+	<div id="xudo-slideshow" class="xudo-slideshow" data-delay="{{ delay }}">
+
+		{% for xudo in xudos %}
+
+			<div class="xudo {% if loop.index == 1 %}active{% endif %}">
+
+				<div class="text">
+					{{ xudo.text }}
+				</div>
+
+				<div class="image">
+					<img src="{{ url_for('static', filename = 'uploads/{}'.format(xudo.image)) }}" />
+				</div>
+
+				<div class="submitted">
+					Submitted by {{ xudo.submittedBy }}, {{ xudo.dateFormatted() }} in {{ xudo.offices|join(", ", attribute = 'city') }}
+				</div>
+
+			</div>
+
+		{% endfor %}
+
+	</div>
+
+{% endblock %}

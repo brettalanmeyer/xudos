@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}Create Xudo{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+
+		<h1>Create Xudo</h1>
+
+		<form action="{{ url_for('xudoController.create') }}" method="POST" enctype="multipart/form-data">
+
+		{% include 'xudos/form.html' %}
+
+			<button class="btn btn-primary">Create Xudo</button>
+
+		</form>
+
+	</div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}Create Office{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+
+		<h1>Create Office</h1>
+
+		<form action="{{ url_for('officeController.create') }}" method="POST">
+
+			{% include 'offices/form.html' %}
+
+			<button class="btn btn-primary">Create Office</button>
+
+		</form>
+
+	</div>
+
+{% endblock %}

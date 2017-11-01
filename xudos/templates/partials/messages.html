@@ -1,0 +1,66 @@
+<div class="container">
+	<div class="flash-messages">
+
+		{% if form and form.errors %}
+
+			<div class="alert alert-danger alert-dismissible">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+
+				{% for field, errors in form.errors.items() %}
+					<strong>{{ form[field].label }}</strong>
+
+					{% for error in errors %}
+						{{ error }}<br />
+					{% endfor %}
+
+				{% endfor %}
+			</div>
+
+		{% endif %}
+
+		{% with dangers = get_flashed_messages(category_filter = ["danger"]) %}
+			{% if dangers %}
+				<div class="alert alert-danger alert-dismissible">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+
+					{% for message in dangers %}
+						{{ message }}<br />
+					{% endfor %}
+				</div>
+			{% endif %}
+		{% endwith %}
+
+		{% with successes = get_flashed_messages(category_filter = ["success"]) %}
+			{% if successes %}
+				<div class="alert alert-success alert-dismissible auto-close">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+
+					{% for message in successes %}
+						{{ message }}<br />
+					{% endfor %}
+				</div>
+			{% endif %}
+		{% endwith %}
+
+		{% with warnings = get_flashed_messages(category_filter = ["warning"]) %}
+			{% if warnings %}
+				<div class="alert alert-warning alert-dismissible auto-close">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+
+					{% for message in warnings %}
+						{{ message }}<br />
+					{% endfor %}
+				</div>
+			{% endif %}
+		{% endwith %}
+
+	</div>
+</div>

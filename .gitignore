@@ -1,0 +1,4 @@
+*.pyc
+/config.cfg
+/dbconfig.cfg
+/xudos/static/.webassets-cache/

@@ -1,0 +1,120 @@
+{% extends "layout.html" %}
+
+{% block title %}Xudos{% endblock %}
+
+{% block body %}
+
+	<div class="container-fluid">
+
+		<a href="{{ url_for('xudoController.new') }}" class="btn btn-primary float-right">Create Xudo</a>
+
+		<h1>Xudos</h1>
+
+		<div class="table-responsive">
+
+			<table class="table table-striped">
+
+				<thead>
+
+					<tr>
+
+						<th class="text-nowrap">Submitted By</th>
+						<th>Text</th>
+						<th>Image</th>
+						<th class="text-nowrap">Office</th>
+						<th class="text-nowrap" colspan="3">Actions</th>
+
+					</tr>
+
+				</thead>
+
+				<tbody>
+
+					{% for xudo in xudos %}
+
+						<tr>
+
+							<td class="text-nowrap">
+								<a href="{{ url_for('xudoController.show', id = xudo.id) }}">
+									{{ xudo.submittedBy }}<br />
+									{{ xudo.dateFormatted() }}
+								</a>
+							</td>
+
+							<td>{{ xudo.text }}</td>
+
+							<td>
+								{% if xudo.image != None %}
+									<a href="{{ url_for('static', filename = 'uploads/{}'.format(xudo.image)) }}" target="_blank">
+										<img src="{{ url_for('static', filename = 'uploads/{}'.format(xudo.image)) }}" class="xudos-index-image" />
+									</a>
+								{% endif %}
+							</td>
+
+							<td class="text-nowrap">
+								{{ xudo.offices|join(", ", attribute = 'city') }}
+							</td>
+
+							<td width="1">
+								<a href="{{ url_for('xudoController.edit', id = xudo.id) }}" class="btn btn-sm btn-info">Edit</a>
+							</td>
+
+							<td width="1">
+								<div class="btn-group d-block" role="group">
+
+									{% if xudo.isAccepted() %}
+										<button type="button" class="btn btn-success dropdown-toggle btn-sm btn-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Accepted</button>
+									{% elif xudo.isRejected() %}
+										<button type="button" class="btn btn-warning dropdown-toggle btn-sm btn-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Rejected</button>
+									{% else %}
+										<button type="button" class="btn btn-secondary dropdown-toggle btn-sm btn-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Awaiting Approval</button>
+									{% endif %}
+
+									<div class="dropdown-menu">
+										<form action="{{ url_for('xudoController.accept', id = xudo.id) }}" method="POST" class="dropdown-item">
+											<button class="btn btn-success btn-sm btn-block" title="Accept Xudo">
+												Accept
+											</button>
+										</form>
+
+										<form action="{{ url_for('xudoController.reject', id = xudo.id) }}" method="POST" class="dropdown-item">
+											<button class="btn btn-warning btn-sm btn-block" title="Reject Xudo">
+												Reject
+											</button>
+										</form>
+
+									</div>
+								</div>
+							</td>
+
+							<td width="1">
+								<form action="{{ url_for('xudoController.delete', id = xudo.id) }}" method="POST">
+									<button class="btn btn-sm btn-danger action-delete">Delete</button>
+								</form>
+							</td>
+
+						</tr>
+
+					{% else %}
+
+						<tr>
+
+							<td colspan="100" class="text-center">No xudos found.</td>
+
+						</tr>
+
+					{% endfor %}
+
+				</tbody>
+
+			</table>
+
+		</div>
+
+		{% with paging = paging %}
+			{% include 'partials/pagination.html' %}
+		{% endwith %}
+
+	</div>
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% if  paging.pages > 0 %}
+
+	<nav aria-label="Xudos Pagination">
+
+		<ul class="pagination justify-content-center">
+
+			{% if paging.page - 1 > 1 %}
+				<li class="page-item">
+					<a href="{{ url_for(request.endpoint, page = 1) }}" title="First Page" class="page-link">
+						<span aria-hidden="true">&laquo; First</span>
+					</a>
+				</li>
+			{% else %}
+				<li class="page-item disabled">
+					<span aria-hidden="true" class="page-link">&laquo; First</span>
+				</li>
+			{% endif %}
+
+			{% if paging.page > 1 %}
+				<li class="page-item">
+					<a href="{{ url_for(request.endpoint, page = paging.page - 1) }}" title="Previous Page" class="page-link">
+						<span aria-hidden="true">&lsaquo; Prev</span>
+					</a>
+				</li>
+			{% else %}
+				<li class="page-item disabled">
+					<span aria-hidden="true" class="page-link">&lsaquo; Prev</span>
+				</li>
+			{% endif %}
+
+			{% for i in range(1, paging.pages + 1): %}
+				{% if i >= paging.page - paging.width and i <= paging.page + paging.width %}
+					<li class="page-item {% if paging.page == i %}active{% endif %}">
+						<a href="{{ url_for(request.endpoint, page = i) }}" title="Page {{ i }}" class="page-link">{{ i }}</a>
+					</li>
+				{% endif %}
+			{% endfor %}
+
+			{% if paging.page < paging.pages %}
+				<li class="page-item">
+					<a href="{{ url_for(request.endpoint, page = paging.page + 1) }}" title="Next Page" class="page-link">
+						<span aria-hidden="true">Next &rsaquo;</span>
+					</a>
+				</li>
+			{% else %}
+				<li class="page-item disabled">
+					<span aria-hidden="true" class="page-link">Next &rsaquo;</span>
+				</li>
+			{% endif %}
+
+			{% if paging.page + 1 < paging.pages %}
+				<li class="page-item">
+					<a href="{{ url_for(request.endpoint, page = paging.pages) }}" title="Last Page" class="page-link">
+						<span aria-hidden="true">Last &raquo;</span>
+					</a>
+				</li>
+			{% else %}
+				<li class="page-item disabled">
+					<span aria-hidden="true" class="page-link">Last &raquo;</span>
+				</li>
+			{% endif %}
+
+		</ul>
+
+	</nav>
+
+{% endif %}

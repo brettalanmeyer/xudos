@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block title %}Xudos{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+
+		<div class="card">
+
+			<div class="card-body">
+
+				<h4 class="card-title">Xudo: {{ xudo.id }}</h4>
+				<p class="card-text">{{ xudo.text }}</p>
+
+				{% if xudo.image != None %}
+					<img src="{{ url_for('static', filename = 'uploads/{}'.format(xudo.image)) }}" class="xudos-show-image" />
+				{% endif %}
+
+				<p class="card-text mt-3">Submitted By: {{ xudo.submittedBy }}</p>
+
+				<a href="{{ url_for('xudoController.index') }}" class="float-right">&laquo; Back to Xudos</a>
+
+				<p class="card-text">
+					{{ xudo.offices|join(", ", attribute = 'city') }}
+				</p>
+
+				{% if xudo.accepted == None %}
+					<div class="d-flex flex-column flex-md-row lead mb-3">
+
+						 <form action="{{ url_for('xudoController.accept', id = xudo.id) }}" method="POST" class="mr-3">
+							<button class="btn btn-success btn-block" title="Accept Xudo">
+								Accept
+							</button>
+						</form>
+
+						<form action="{{ url_for('xudoController.reject', id = xudo.id) }}" method="POST" class="mr-3">
+							<button class="btn btn-warning btn-block" title="Reject Xudo">
+								Reject
+							</button>
+						</form>
+
+						<form action="{{ url_for('xudoController.delete', id = xudo.id) }}" method="POST">
+							<button class="btn btn-danger action-delete">Delete</button>
+						</form>
+
+					</div>
+				{% endif %}
+
+
+			</div>
+
+		</div>
+
+	</div>
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+{% block title %}Offices{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+
+		<a href="{{ url_for('officeController.new') }}" class="btn btn-primary float-right">Create Office</a>
+
+		<h1>Offices</h1>
+
+		<div class="table-responsive">
+
+			<table class="table table-striped">
+
+				<thead>
+
+					<tr>
+
+						<th>City</th>
+						<th>State</th>
+						<th width="1" colspan="2">Actions</th>
+
+					</tr>
+
+				</thead>
+
+				<tbody>
+
+					{% for office in offices %}
+
+						<tr>
+
+							<td>{{ office.city }}</td>
+							<td>{{ office.state }}</td>
+
+							<td width="1">
+								<form action="{{ url_for('officeController.select') }}" method="POST">
+									<button type="submit" name="officeId" value="{{ office.id }}" class="btn btn-light btn-sm btn-block">Select</button>
+								</form>
+							</td>
+
+							<td width="1">
+								<a href="{{ url_for('officeController.edit', id = office.id) }}" class="btn btn-sm btn-info">Edit</a>
+							</td>
+
+							<td width="1">
+								<form action="{{ url_for('officeController.delete', id = office.id) }}" method="POST">
+									<button class="btn btn-sm btn-danger action-delete">Delete</button>
+								</form>
+							</td>
+
+						</tr>
+
+					{% else %}
+
+						<tr>
+
+							<td colspan="100" class="text-center">No offices found.</td>
+
+						</tr>
+
+					{% endfor %}
+
+				</tbody>
+
+			</table>
+
+		</div>
+
+	</div>
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block title %}Users{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+
+		<a href="{{ url_for('userController.new') }}" class="btn btn-primary float-right">Create User</a>
+
+		<h1>Users</h1>
+
+		<div class="table-responsive">
+
+			<table class="table table-striped">
+
+				<thead>
+
+					<tr>
+
+						<th>Name</th>
+						<th>Admin</th>
+						<th>Email</th>
+						<th>Office</th>
+						<th width="1" colspan="2">Actions</th>
+
+					</tr>
+
+				</thead>
+
+				<tbody>
+
+					{% for user in users %}
+
+						<tr>
+
+							<td>{{ user.name }}</td>
+							<td>{{ 'Yes' if user.is_admin() else 'No' }}</td>
+							<td>{{ user.email }}</td>
+							<td>{{ user.office.name() }}</td>
+
+							<td width="1">
+								<a href="{{ url_for('userController.edit', id = user.id) }}" class="btn btn-sm btn-info">Edit</a>
+							</td>
+
+							<td width="1">
+								<form action="{{ url_for('userController.delete', id = user.id) }}" method="POST">
+									<button class="btn btn-sm btn-danger action-delete" {% if user.id == current_user.id %}disabled title="You cannot delete yourself"{% endif %}>Delete</button>
+								</form>
+							</td>
+
+						</tr>
+
+					{% else %}
+
+						<tr>
+
+							<td colspan="100" class="text-center">No users found.</td>
+
+						</tr>
+
+					{% endfor %}
+
+				</tbody>
+
+			</table>
+
+		</div>
+
+	</div>
+
+{% endblock %}

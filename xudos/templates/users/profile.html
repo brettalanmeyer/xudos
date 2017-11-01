@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+
+		<a href="{{ url_for('userController.editProfile') }}" class="float-right">Edit Profile</a>
+
+		<h1>Profile</h1>
+
+		<div class="card">
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">{{ user.name }}</li>
+				<li class="list-group-item">{{ user.email }}</li>
+				<li class="list-group-item">{{ user.office.name() }}</li>
+				<li class="list-group-item">Administrator: {{ 'Yes' if user.is_admin() else 'No' }}</li>
+			</ul>
+		</div>
+
+	</div>
+
+{% endblock %}

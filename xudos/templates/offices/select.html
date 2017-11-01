@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}Select Office{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+
+		<h1>Select Office</h1>
+
+		<form action="{{ url_for('officeController.select') }}" method="POST">
+
+			{% for office in offices %}
+
+				<button type="submit" name="officeId" value="{{ office.id }}" class="btn btn-info btn-lg btn-block">{{ office.name() }}</button>
+
+			{% endfor %}
+
+		</form>
+
+	</div>
+
+{% endblock %}

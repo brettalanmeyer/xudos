@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit Office{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+
+		<h1>Edit Office</h1>
+
+		<form action="{{ url_for('officeController.update', id = office.id) }}" method="POST">
+
+			{% include 'offices/form.html' %}
+
+			<button class="btn btn-primary">Update Office</button>
+
+		</form>
+
+	</div>
+
+{% endblock %}

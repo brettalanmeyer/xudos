@@ -1,0 +1,23 @@
+<div class="form-group">
+	{{ form.text.label }}
+	{{ form.text(class = "form-control", rows = 10, autofocus = true) }}
+</div>
+
+<div class="form-group">
+	{{ form.submittedBy.label }}
+	{{ form.submittedBy(class = "form-control") }}
+</div>
+
+<div class="form-group">
+	{{ form.image.label }}
+	{{ form.image(class = "form-control") }}
+</div>
+
+{% if form.image.data != None and form.image.data|length > 0 %}
+	<img src="{{ url_for('static', filename = 'uploads/{}'.format(form.image.data)) }}" class="xudo-form-image" />
+{% endif %}
+
+<div class="form-group">
+	{{ form.offices.label }}
+	{{ form.offices(class = "form-control") }}
+</div>
